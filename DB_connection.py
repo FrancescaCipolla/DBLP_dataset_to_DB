@@ -6,7 +6,7 @@
 from sqlalchemy import *
 import config as cfg
 import pandas as pd
-import psycopg2
+#import psycopg2
 
 
 #formato della connection string:
@@ -51,7 +51,7 @@ def count_row_from_db(df,table_name):
 
 
  
-#interroga il db e stampa il numero di righe affette dalla query
+#USARE QUESTA!!!!!!interroga il db e stampa il numero di righe affette dalla query
 def count_row_from_db3(df,table_name):
     connection = create_conn(conn_str)
     #connection.autocommit = True----->A COSA SERVE?

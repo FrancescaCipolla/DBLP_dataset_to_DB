@@ -38,7 +38,6 @@ def read_json (df,path,data,columns_list):
             source_df=read_json_chunk(chunk,data)
             source_df.drop(columns=columns_list, inplace=True)
             df=pd.concat([df,source_df], ignore_index=True)
-            break
         return df
                 
         
@@ -49,7 +48,6 @@ def read_json_flatten (df,path,data,recordpath,meta,metaprefix,recordprefix):
         for chunk in chunks:
             source_df=read_json_chunk(chunk,data,recordpath, meta,metaprefix,recordprefix)
             df=pd.concat([df,source_df], ignore_index=True)
-            break
         return df
                      
 
@@ -68,7 +66,6 @@ def read_json_flatten_from_dict (df,path,data,recordpath,meta,metaprefix,recordp
             df_tmp=pd.json_normalize(source_df, recordpath,meta,metaprefix,recordprefix)
             #concatena il dataframe temporaneo e quello inizialmente vuoto, alla fine del loop conterrà tutti gli elementi della chiave fos
             df=pd.concat([df,df_tmp])
-            break
         return df
         
 
