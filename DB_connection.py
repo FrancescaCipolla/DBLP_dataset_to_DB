@@ -35,12 +35,12 @@ def connect_db (df,dfname):
     connection.close()
     return nb_row
 
-
 #interroga il db e stampa il numero di righe affette dalla query
 def count_row_from_db(df,table_name):
     connection = create_conn(conn_str)
     #connection.autocommit = True----->A COSA SERVE?
     print (f"""Tabella {table_name}:""")
+    print()
     try:
         for column in df.columns:
             sql_query=f"""SELECT COUNT({column}) FROM {table_name}"""
@@ -50,8 +50,16 @@ def count_row_from_db(df,table_name):
     except AttributeError:
         sql_query=f"""SELECT COUNT(*) FROM {table_name}"""
         results=connection.execute(sql_query)
-        print (f"""Nr righe non nulle = {results.fetchall()[0][0]}
-                """) 
+        print (f"""Nr righe non nulle = {results.fetchall()[0][0]}""") 
+    print()
     connection.close()
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
