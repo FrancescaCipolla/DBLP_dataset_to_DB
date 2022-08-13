@@ -28,10 +28,10 @@ def create_conn(conn_str):
     return connection
 
 #crea la connessione+scrive i records del DataFrame nel db
-def connect_db (df,dfname):
+def connect_db (df,table_name):
     connection=create_conn(conn_str)
     #metadata = MetaData()---->A COSA SERVE?
-    nb_row=df.to_sql(dfname, con=connection,if_exists='append',method='multi',chunksize=10000,index=False)
+    nb_row=df.to_sql(table_name, con=connection,if_exists='append',method='multi',chunksize=10000,index=False)
     connection.close()
     return nb_row
 
@@ -40,7 +40,7 @@ def count_row_from_db(df,table_name):
     connection = create_conn(conn_str)
     #connection.autocommit = True----->A COSA SERVE?
     print (f"""Tabella {table_name}:""")
-    print()
+    #print()
     try:
         for column in df.columns:
             sql_query=f"""SELECT COUNT({column}) FROM {table_name}"""
