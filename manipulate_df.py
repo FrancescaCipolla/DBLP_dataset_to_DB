@@ -1,4 +1,4 @@
-#manipulate_dataframe
+#manipulate_df
 
 #funzioni per la manipolazione del dataframe
 
@@ -33,7 +33,7 @@ def unescape_special_char (df):
                                       na_action='ignore') #mantiene i valori NaN senza passarli alla funzione map
     
     
-#rinomina le colonne del DataFrame in base al dict passato
+#rinomina le colonne del DataFrame in base al dict passato {colonna da rinominare : nuovo nome della colonna}
 def rename_columns(df, columns_dict):
     df.rename(columns=columns_dict, inplace=True)
 
@@ -46,11 +46,11 @@ def del_columns(df, columns_list):
 def cast_to(df,column,dtype):
     df[column]=(df[column]).astype(dtype,copy=False)
 
-#esegue una funzione di hash sul DataFrame, convertendo il risultato al tipo di dato passato
+#esegue una funzione di hash sul DataFrame, convertendo il risultato al tipo di dato passato, ne prende il valore assoluto affinchè i valori di hash siano positivi
 def hash_df(df,dtype):
     return abs((pd.util.hash_pandas_object(df, index=False)).astype(dtype,copy=False))
 
-#trasforma ogni elemento di una lista in una riga
+#trasforma ogni elemento di una lista in una riga del DataFrame
 def expand_column(df,column):
     return df.explode(column,ignore_index=True) #indici risultanti da 0 a n-1
 

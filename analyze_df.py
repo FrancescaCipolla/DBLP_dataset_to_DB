@@ -1,4 +1,4 @@
-#analyze_dataframe
+#analyze_df
 
 #funzioni per l'analisi del dataframe
 
@@ -39,7 +39,7 @@ def column_with_special_char (df,string):
 def info(df):
     return df.info(verbose=True,show_counts=True)
     
-#dato un DataFrame e una lista di colonne determina i duplicati e li ordina    
+#dato un DataFrame e una lista di colonne determina i duplicati su quel sottoinsieme di colonne e li ordina    
 def check_duplicates (df,columns_list):
         return df[df.duplicated(subset=columns_list, keep=False)].sort_values(by=columns_list)
 

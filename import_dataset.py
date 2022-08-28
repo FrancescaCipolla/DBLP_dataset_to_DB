@@ -1,6 +1,6 @@
 #import_dataset
 
-#funzioni per la lettura del Json e creazione del DataFrame
+#funzioni per la lettura del Json e creazione dei DataFrame
 
 #importa moduli necessari
 import pandas as pd
@@ -19,7 +19,7 @@ def initialize():
 #recordprefix=prefisso per il campo record
 def read_json_chunk (chunk, data, recordpath=None, meta=None, metaprefix=None, recordprefix=None):
     if (recordpath==None) and (meta==None) and (metaprefix==None) and (recordprefix==None):
-        df=(pd.json_normalize(data=chunk[data])) #oggetti Json da serializzare
+        df=(pd.json_normalize(data=chunk[data])) #oggetti Json
     else:
         df= (pd.json_normalize(data=chunk[data], record_path=[recordpath], meta=[meta], meta_prefix=metaprefix, record_prefix=recordprefix)) 
     return df
@@ -31,13 +31,11 @@ def read_json_chunk (chunk, data, recordpath=None, meta=None, metaprefix=None, r
 #chunksize=dimensione dei chunk, restituisce un oggetto JsonReader iterabile
 def read_json (df,path,data,columns_list):
     with open (path) as f:
-        chunks=pd.read_json(path_or_buf=f, #
-                      lines=True, #legge il file come un oggetto Json per linea
-                      chunksize=10000) #
+        chunks=pd.read_json(path_or_buf=f, lines=True, chunksize=10000)
         for chunk in chunks:
             source_df=read_json_chunk(chunk,data)
             source_df.drop(columns=columns_list, inplace=True)
-            df=pd.concat([df,source_df], ignore_index=True)
+            df=pd.concat(objs=[df,source_df], ignore_index=True)
         return df
                 
         
@@ -47,13 +45,13 @@ def read_json_flatten (df,path,data,recordpath,meta,metaprefix,recordprefix):
         chunks=pd.read_json(path_or_buf=f,lines=True,chunksize=10000) 
         for chunk in chunks:
             source_df=read_json_chunk(chunk,data,recordpath, meta,metaprefix,recordprefix)
-            df=pd.concat([df,source_df], ignore_index=True)
+            df=pd.concat(objs=[df,source_df], ignore_index=True)
         return df
                      
 
         
 def read_json_flatten_from_dict (df,path,data,recordpath,meta,metaprefix,recordprefix):
-#legge il json per chunk, itero sui chunk e chiamo la funzione read_json_chunk
+#legge il json per chunk, itera sui chunk e chiama la funzione read_json_chunk
     with open (path) as f:
         chunks=pd.read_json(f, lines=True, chunksize=10000)  
         for chunk in chunks:
@@ -65,7 +63,7 @@ def read_json_flatten_from_dict (df,path,data,recordpath,meta,metaprefix,recordp
             #memorizza gli elementi del dict in un dataframe temporaneo 
             df_tmp=pd.json_normalize(source_df, recordpath,meta,metaprefix,recordprefix)
             #concatena il dataframe temporaneo e quello inizialmente vuoto, alla fine del loop conterrà tutti gli elementi della chiave fos
-            df=pd.concat([df,df_tmp])
+            df=pd.concat(objs=[df,df_tmp])
         return df
         
 
